@@ -10,6 +10,7 @@ import json
 import hashlib
 import statistics
 import random
+import subprocess
 
 class VEILDRA:
     def __init__(self):
@@ -19,7 +20,7 @@ class VEILDRA:
         self.port_sequences = defaultdict(list)
         self.packet_times = defaultdict(list)
         self.packet_sizes = defaultdict(list)
-        self.scan_threshold =100
+        self.scan_threshold =5
         self.time_window = 10
         self.reshaping = False
         self.signature_db = {}
@@ -66,6 +67,10 @@ class VEILDRA:
             
             self.packet_counts[src_ip].append(current_time)
             self.packet_times[src_ip].append(current_time)
+            # Filter ICMP ping traffic
+            from scapy.all import ICMP
+            if packet.haslayer(ICMP):
+                return
             self.packet_sizes[src_ip].append(len(packet))
             
             if packet.haslayer(TCP):
@@ -228,18 +233,17 @@ class VEILDRA:
             print(f"\n[VEILDRA L2] TOPOLOGY RESHAPING - Version {v}")
             
             try:
-                h1 = self.net.get('h1')
-                h2 = self.net.get('h2')
-                h3 = self.net.get('h3')
-                
-                h1.cmd(f'ip addr flush dev h1-eth0')
-                h2.cmd(f'ip addr flush dev h2-eth0')
-                h3.cmd(f'ip addr flush dev h3-eth0')
-                
-                h1.cmd(f'ip addr add 10.0.{v}.1/24 dev h1-eth0')
-                h2.cmd(f'ip addr add 10.0.{v}.2/24 dev h2-eth0')
-                h3.cmd(f'ip addr add 10.0.{v}.3/24 dev h3-eth0')
-                
+                h1_pid = int(self.net.get('h1').pid)
+                h2_pid = int(self.net.get('h2').pid)
+                h3_pid = int(self.net.get('h3').pid)
+
+                subprocess.call(['mnexec', '-a', str(h1_pid), 'ip', 'addr', 'flush', 'dev', 'h1-eth0'])
+                subprocess.call(['mnexec', '-a', str(h2_pid), 'ip', 'addr', 'flush', 'dev', 'h2-eth0'])
+                subprocess.call(['mnexec', '-a', str(h3_pid), 'ip', 'addr', 'flush', 'dev', 'h3-eth0'])
+
+                subprocess.call(['mnexec', '-a', str(h1_pid), 'ip', 'addr', 'add', f'10.0.{v}.1/24', 'dev', 'h1-eth0'])
+                subprocess.call(['mnexec', '-a', str(h2_pid), 'ip', 'addr', 'add', f'10.0.{v}.2/24', 'dev', 'h2-eth0'])
+                subprocess.call(['mnexec', '-a', str(h3_pid), 'ip', 'addr', 'add', f'10.0.{v}.3/24', 'dev', 'h3-eth0'])
                 print(f"[VEILDRA L2] Real hosts moved to 10.0.{v}.x subnet")
                 
                 self.migrate_services(v)

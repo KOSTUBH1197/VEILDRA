@@ -6,28 +6,34 @@
     "false_positives": 0,
     "returning_attackers": 0,
     "unique_attackers": 1,
-    "shadow_deployments": 0,
-    "avg_detection_time_ms": 2.8905868530273438,
-    "avg_reshape_time_ms": 0,
-    "uptime_seconds": 208.21057653427124
+    "shadow_deployments": 1,
+    "avg_detection_time_ms": 8.295536041259766,
+    "avg_reshape_time_ms": 476.26566886901855,
+    "uptime_seconds": 398.33950662612915
   },
   "signatures": {
-    "1000_0_random_database_hunting": {
+    "0_0_random_database_hunting": {
       "ip": "10.0.0.2",
       "signature": {
-        "avg_interval": 0.0007,
-        "interval_stddev": 0.0006,
-        "scan_speed": 1448.85,
+        "avg_interval": 0.0061,
+        "interval_stddev": 0.0029,
+        "scan_speed": 189.5,
         "avg_packet_size": 58,
         "port_pattern": "random",
-        "packet_count": 9,
+        "packet_count": 6,
         "inferred_intent": "database_hunting"
       },
-      "first_seen": "2026-04-23 01:32:08",
+      "first_seen": "2026-04-23 16:21:38",
       "count": 1,
       "last_ip": "10.0.0.2",
-      "last_seen": "2026-04-23 01:32:08"
+      "last_seen": "2026-04-23 16:21:38"
     }
   },
-  "shadows": {}
+  "shadows": {
+    "10.0.0.2": {
+      "intent": "database_hunting",
+      "deployed_at": "2026-04-23 16:21:38",
+      "version": 2
+    }
+  }
 }
