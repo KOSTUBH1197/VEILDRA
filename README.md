@@ -66,17 +66,18 @@ Infers attacker intent from port scan patterns and deploys tailored decoy servic
 
 ## Project Structure
 
-veildra/
-├── veildra_main.py              # Main system — all 4 layers integrated
-├── agents/
-│   ├── traffic_detector.py      # L1 — Threat detection
-│   └── cognitive_signature.py   # L3 — Attacker fingerprinting
-├── environment/
-│   ├── network_topology.py      # Network setup
-│   └── veildra_core.py          # Core loop
-├── data/
-│   └── results.json             # Experiment results
-└── test_capture.py              # Packet capture testing
+    veildra/
+    ├── veildra_main.py              # Main system — all 4 layers integrated
+    ├── agents/
+    │   ├── traffic_detector.py      # L1 — Threat detection
+    │   └── cognitive_signature.py   # L3 — Attacker fingerprinting
+    ├── environment/
+    │   ├── network_topology.py      # Network setup
+    │   └── veildra_core.py          # Core loop
+    ├── data/
+    │   └── results.json             # Experiment results
+    └── test_capture.py              # Packet capture testing
+
 ---
 
 ## How to Run
