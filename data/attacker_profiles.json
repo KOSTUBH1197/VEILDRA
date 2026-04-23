@@ -1,0 +1,13 @@
+{
+  "attacker_127": {
+    "ip": "127.0.0.1",
+    "signature": {
+      "avg_interval": 0.0069,
+      "scan_speed": 194.19,
+      "port_hash": "a02962c5"
+    },
+    "first_seen": "2026-04-22 20:21:47",
+    "count": 2,
+    "last_ip": "127.0.0.1"
+  }
+}

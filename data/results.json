@@ -1,0 +1,33 @@
+{
+  "metrics": {
+    "total_threats": 1,
+    "total_reshapes": 1,
+    "true_positives": 1,
+    "false_positives": 0,
+    "returning_attackers": 0,
+    "unique_attackers": 1,
+    "shadow_deployments": 0,
+    "avg_detection_time_ms": 2.8905868530273438,
+    "avg_reshape_time_ms": 0,
+    "uptime_seconds": 208.21057653427124
+  },
+  "signatures": {
+    "1000_0_random_database_hunting": {
+      "ip": "10.0.0.2",
+      "signature": {
+        "avg_interval": 0.0007,
+        "interval_stddev": 0.0006,
+        "scan_speed": 1448.85,
+        "avg_packet_size": 58,
+        "port_pattern": "random",
+        "packet_count": 9,
+        "inferred_intent": "database_hunting"
+      },
+      "first_seen": "2026-04-23 01:32:08",
+      "count": 1,
+      "last_ip": "10.0.0.2",
+      "last_seen": "2026-04-23 01:32:08"
+    }
+  },
+  "shadows": {}
+}
