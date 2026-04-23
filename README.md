@@ -1,7 +1,7 @@
 # VEILDRA
 ## Intent-Aware Topological Deception for Proactive Network Defense
 
-**Author:** Kostubh Kumar  
+**Author:** Kostubh Kumar & Dr. Hemamalini V.
 **Type:** Cybersecurity Research Prototype  
 **Status:** Active Development
 
