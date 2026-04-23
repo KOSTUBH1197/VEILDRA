@@ -1,75 +1,106 @@
-# VEILDRA Experiment Results
-**Date:** April 23, 2026  
-**Environment:** Ubuntu 24.04 on VirtualBox, Mininet simulation  
-**Tester:** Kostubh Kumar
+# VEILDRA Formal Experiment Results
+**Date:** April 23, 2026
+**Environment:** Ubuntu 24.04, VirtualBox, Mininet Simulation
+**Researcher:** Kostubh Kumar
 
 ---
 
-## Experiment 1 — Threat Detection Accuracy
+## Experiment 1 — Database Hunting Detection (10 trials)
 
-| Scan Type | Packets Sent | Detected | Detection Time |
-|-----------|-------------|----------|----------------|
-| Database scan | 9 packets | YES | 2.89ms |
-| Web scan | 9 packets | YES | 8.18ms |
-| Admin scan | 9 packets | YES | 1.45ms |
+| Trial | Detection Time | Reshape Time | Intent | Returning |
+|-------|---------------|--------------|--------|-----------|
+| 1 | 1.08ms | 314.25ms | database_hunting | No |
+| 2 | 2.06ms | 274.61ms | database_hunting | No |
+| 3 | 1.00ms | 283.34ms | database_hunting | No |
+| 4 | 0.22ms | 202.52ms | database_hunting | No |
+| 5 | 3.36ms | 236.96ms | database_hunting | Yes |
+| 6 | 3.69ms | 218.02ms | database_hunting | Yes |
+| 7 | 0.95ms | 199.61ms | database_hunting | Yes |
+| 8 | 1.30ms | 240.24ms | database_hunting | Yes |
+| 9 | 0.41ms | 222.21ms | database_hunting | Yes |
+| 10 | 1.65ms | 278.42ms | database_hunting | Yes |
 
-**True Positive Rate: 100%**  
+**Avg Detection: 1.67ms | Avg Reshape: 247ms | Accuracy: 10/10**
+
+---
+
+## Experiment 2 — Web Hunting Detection (10 trials)
+
+| Trial | Detection Time | Reshape Time | Intent | Returning |
+|-------|---------------|--------------|--------|-----------|
+| 1 | 3.13ms | 234.49ms | web_hunting | No |
+| 2 | 2.50ms | 244.47ms | web_hunting | No |
+| 3 | 7.76ms | 219.46ms | web_hunting | Yes |
+| 4 | 3.01ms | 252.85ms | web_hunting | Yes |
+| 5 | 5.27ms | 655.18ms | web_hunting | No |
+| 6 | 2.83ms | 403.95ms | web_hunting | Yes |
+| 7 | 4.64ms | 452.27ms | web_hunting | Yes |
+| 8 | 0.76ms | 363.14ms | web_hunting | Yes |
+| 9 | 8.52ms | 444.98ms | web_hunting | Yes |
+| 10 | 6.12ms | 454.60ms | web_hunting | Yes |
+
+**Avg Detection: 4.45ms | Avg Reshape: 372.74ms | Accuracy: 10/10**
+
+---
+
+## Experiment 3 — Admin Hunting Detection (10 trials)
+
+| Trial | Detection Time | Reshape Time | Intent | Returning |
+|-------|---------------|--------------|--------|-----------|
+| 1 | 1.11ms | 379.05ms | admin_hunting | No |
+| 2 | 13.16ms | 374.64ms | admin_hunting | Yes |
+| 3 | 2.99ms | 431.15ms | admin_hunting | No |
+| 4 | 2.00ms | 387.89ms | admin_hunting | Yes |
+| 5 | 2.92ms | 388.72ms | admin_hunting | Yes |
+| 6 | 8.80ms | 440.90ms | admin_hunting | Yes |
+| 7 | 2.22ms | 521.11ms | admin_hunting | Yes |
+| 8 | 0.51ms | 379.02ms | admin_hunting | Yes |
+| 9 | 19.26ms | 431.19ms | admin_hunting | Yes |
+| 10 | 3.92ms | 328.13ms | admin_hunting | Yes |
+
+**Avg Detection: 5.69ms | Avg Reshape: 406.18ms | Accuracy: 10/10**
+
+---
+
+## Experiment 4 — False Positive Test
+
+| Traffic Type | Packets | Alert Triggered | Result |
+|-------------|---------|----------------|--------|
+| ICMP Ping h1 to h2 | 5 | No | PASS |
+| ICMP Ping h2 to h1 | 5 | No | PASS |
+| ICMP Ping h3 to h1 | 10 | No | PASS |
+| ICMP Ping h1 to h3 | 20 | No | PASS |
+
 **False Positive Rate: 0%**
 
 ---
 
-## Experiment 2 — Intent Classification
+## Experiment 5 — Baseline Comparison
 
-| Attack Intent | Ports Scanned | Correctly Classified |
-|--------------|--------------|---------------------|
-| database_hunting | 3306, 5432, 27017, 6379, 1433 | YES |
-| web_hunting | 80, 443, 8080, 8443, 8000 | YES |
-| admin_hunting | 22, 23, 3389, 5900 | YES |
-
-**Intent Classification Accuracy: 3/3 (100%)**
+| Feature | Static Network | VEILDRA |
+|---------|---------------|---------|
+| Threat Detection | None | 100% |
+| Avg Detection Time | N/A | 3.94ms |
+| Network Reshaping | Never | Automatic |
+| Avg Reshape Time | N/A | 342ms |
+| Attacker Map Valid | Always | Invalidated |
+| Intent Classification | None | 100% |
+| Returning Attacker | Undetected | 100% |
+| False Positives | N/A | 0% |
+| Deception Layer | None | Personalized |
 
 ---
 
-## Experiment 3 — Topology Reshaping Performance
+## Overall Summary
 
 | Metric | Value |
 |--------|-------|
-| Avg Reshape Time | 228ms |
-| Min Reshape Time | 145ms |
-| Max Reshape Time | 651ms |
-| Topology Versions Created | 3+ per session |
-
----
-
-## Experiment 4 — Returning Attacker Detection
-
-| Session | IP Used | Detected as Returning |
-|---------|---------|----------------------|
-| Session 1 | 127.0.0.1 | New attacker registered |
-| Session 2 | 127.0.0.1 | RETURNING ATTACKER DETECTED |
-| Times detected | 2 | Match confidence: HIGH |
-
-**Re-identification Accuracy: 100% in controlled test**
-
----
-
-## Experiment 5 — System Performance
-
-| Metric | Value |
-|--------|-------|
-| Avg Detection Time | 4.67ms |
-| Min Detection Time | 0.59ms |
-| Max Detection Time | 32.3ms |
-| Avg Packet Size (scan) | 58 bytes |
-| Scan Speed Detected | 221 to 2517 packets/sec |
-
----
-
-## Summary
-
-VEILDRA successfully demonstrated:
-1. Real-time threat detection under 10ms average
-2. 100% intent classification accuracy across 3 attack types
-3. Automatic topology reshaping under 250ms average
-4. Returning attacker re-identification across sessions
-5. Zero false positives during testing
+| Total Experiments | 30 |
+| Total True Positives | 30 |
+| Total False Positives | 0 |
+| Overall Detection Accuracy | 100% |
+| Overall Intent Accuracy | 100% |
+| Avg Detection Time | 3.94ms |
+| Avg Reshape Time | 342ms |
+| Returning Attacker Detection | 100% |
+| Attack Types Tested | 3 |
