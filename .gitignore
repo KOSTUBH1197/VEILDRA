@@ -8,3 +8,6 @@ data/results.json
 data/attacker_profiles.json
 [VEILDRA]
 h2
+data/cicids2017/
+data/cicids2017-cleaned-and-preprocessed.zip
+data/veildra_model.pkl
