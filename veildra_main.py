@@ -10,6 +10,8 @@ import json
 import hashlib
 import statistics
 import random
+import pandas as pd
+from agents.ml_detector import MLThreatDetector
 import subprocess
 
 class VEILDRA:
@@ -42,7 +44,10 @@ class VEILDRA:
         
         # Valid Mininet IP ranges (for filtering)
         self.mininet_ranges = ["10.0."]
-        
+        # ML Model
+        self.ml_detector = MLThreatDetector()
+        self.ml_detector.load_model()
+        self.ml_enabled = True
     # ============ LAYER 1 — THREAT DETECTION WITH FILTERING ============
     
     def is_mininet_traffic(self, src_ip):
@@ -85,13 +90,34 @@ class VEILDRA:
             
             count = len(self.packet_counts[src_ip])
             
-            if count > self.scan_threshold and not self.reshaping:
+            # ML based detection
+            ml_threat = False
+            ml_probability = 0.0
+            
+            if self.ml_enabled and len(self.packet_times[src_ip]) >= 3:
+                duration = current_time - self.packet_times[src_ip][0] + 0.001
+                flow_features = {
+                    'flow_packets_per_sec': count / duration,
+                    'flow_bytes_per_sec': sum(self.packet_sizes[src_ip]) / duration,
+                    'packet_length_mean': sum(self.packet_sizes[src_ip]) / len(self.packet_sizes[src_ip]),
+                    'packet_length_std': float(pd.Series(self.packet_sizes[src_ip]).std() or 0),
+                    'flow_iat_mean': float(pd.Series(self.packet_times[src_ip]).diff().mean() or 0),
+                    'flow_iat_std': float(pd.Series(self.packet_times[src_ip]).diff().std() or 0),
+                    'fwd_packets_per_sec': count / duration,
+                    'total_fwd_packets': count,
+                    'ack_flag_count': 0,
+                    'psh_flag_count': 0
+                }
+                ml_threat, ml_probability = self.ml_detector.predict(flow_features)
+            
+            if (count > self.scan_threshold or ml_threat) and not self.reshaping:
                 detection_start = time.time()
                 self.total_threats += 1
                 self.true_positives += 1
                 self.current_attacker = src_ip
                 
                 print(f"\n[VEILDRA L1] THREAT DETECTED from {src_ip}")
+                print(f"[VEILDRA L1] ML Detection: {ml_threat} (confidence: {round(ml_probability, 3)})")
                 print(f"[VEILDRA L1] Packets in {self.time_window}s: {count}")
                 print(f"[VEILDRA L1] Avg packet size: {round(statistics.mean(self.packet_sizes[src_ip]), 2)} bytes")
                 

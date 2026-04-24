@@ -7,32 +7,32 @@
     "returning_attackers": 0,
     "unique_attackers": 1,
     "shadow_deployments": 1,
-    "avg_detection_time_ms": 8.295536041259766,
-    "avg_reshape_time_ms": 476.26566886901855,
-    "uptime_seconds": 398.33950662612915
+    "avg_detection_time_ms": 7.639646530151367,
+    "avg_reshape_time_ms": 807.5771331787109,
+    "uptime_seconds": 271.4274616241455
   },
   "signatures": {
     "0_0_random_database_hunting": {
       "ip": "10.0.0.2",
       "signature": {
-        "avg_interval": 0.0061,
-        "interval_stddev": 0.0029,
-        "scan_speed": 189.5,
+        "avg_interval": 0.1329,
+        "interval_stddev": 0.2411,
+        "scan_speed": 9.02,
         "avg_packet_size": 58,
         "port_pattern": "random",
         "packet_count": 6,
         "inferred_intent": "database_hunting"
       },
-      "first_seen": "2026-04-23 16:21:38",
+      "first_seen": "2026-04-24 10:34:50",
       "count": 1,
       "last_ip": "10.0.0.2",
-      "last_seen": "2026-04-23 16:21:38"
+      "last_seen": "2026-04-24 10:34:50"
     }
   },
   "shadows": {
     "10.0.0.2": {
       "intent": "database_hunting",
-      "deployed_at": "2026-04-23 16:21:38",
+      "deployed_at": "2026-04-24 10:34:50",
       "version": 2
     }
   }
