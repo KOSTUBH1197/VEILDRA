@@ -36,6 +36,13 @@ class MLThreatDetector:
         available = [f for f in self.features if f in df.columns]
         X = df[available].copy()
         y = (df['Attack Type'] != 'Normal Traffic').astype(int)
+        # Remove duplicate rows to prevent data leakage
+        combined = X.copy()
+        combined['label'] = y.values
+        combined = combined.drop_duplicates()
+        X = combined.drop('label', axis=1)
+        y = combined['label']
+        print(f"[ML] After deduplication: {len(X)} samples")
         X = X.fillna(0)
         X = X.replace([np.inf, -np.inf], 0)
         print(f"[ML] Features used: {available}")
