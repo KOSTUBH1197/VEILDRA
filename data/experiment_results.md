@@ -1,7 +1,7 @@
 # VEILDRA Formal Experiment Results
 **Date:** April 23, 2026
 **Environment:** Ubuntu 24.04, VirtualBox, Mininet Simulation
-**Researcher:** Kostubh Kumar
+**Researcher:** Kostubh Kumar & Dr. Hemamalini V.
 
 ---
 
@@ -89,18 +89,40 @@
 | False Positives | N/A | 0% |
 | Deception Layer | None | Personalized |
 
+
+---
+
+## Experiment 6 — ML Model Performance (CICIDS2017 Dataset)
+
+| Metric | Value |
+|--------|-------|
+| Dataset | CICIDS2017 Cleaned and Preprocessed |
+| Total Samples | 200,000 |
+| Normal Traffic Samples | 112,751 |
+| Attack Samples (Port Scanning) | 87,249 |
+| Training Samples | 160,000 |
+| Test Samples | 40,000 |
+| Algorithm | Random Forest (100 estimators) |
+| Accuracy | 99.98% |
+| Precision (Attack) | 1.00 |
+| Recall (Attack) | 1.00 |
+| F1 Score (Attack) | 1.00 |
+| False Positive Rate | 0.00% |
+| Detection Threshold | 0.3 |
+
 ---
 
 ## Overall Summary
 
 | Metric | Value |
 |--------|-------|
-| Total Experiments | 30 |
-| Total True Positives | 30 |
-| Total False Positives | 0 |
-| Overall Detection Accuracy | 100% |
-| Overall Intent Accuracy | 100% |
+| Total Experiments | 30 behavioral + ML validation |
+| Behavioral Detection Accuracy | 100% |
+| ML Detection Accuracy | 99.98% |
+| Overall False Positive Rate | 0% |
 | Avg Detection Time | 3.94ms |
 | Avg Reshape Time | 342ms |
 | Returning Attacker Detection | 100% |
+| Intent Classification | 100% |
 | Attack Types Tested | 3 |
+| ML Dataset Size | 200,000 samples |
