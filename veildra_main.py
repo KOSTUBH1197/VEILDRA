@@ -22,7 +22,7 @@ class VEILDRA:
         self.port_sequences = defaultdict(list)
         self.packet_times = defaultdict(list)
         self.packet_sizes = defaultdict(list)
-        self.scan_threshold =5
+        self.scan_threshold =50
         self.time_window = 10
         self.reshaping = False
         self.signature_db = {}

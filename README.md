@@ -54,7 +54,28 @@ Infers attacker intent from port scan patterns and deploys tailored decoy servic
 | Returning Attacker Detection | 100% |
 | Baseline Comparison | Validated |
 ---
+## ML-Based Threat Detection
 
+VEILDRA uses a dual-layer detection architecture.
+
+**Layer 1 — Behavioral Threshold Detection**
+Real-time packet rate analysis with configurable threshold. Achieves 100% detection accuracy in Mininet simulation environment.
+
+**Layer 2 — ML Classification (CICIDS2017)**
+Random Forest classifier trained on 200,000 samples from the CICIDS2017 dataset.
+
+| ML Metric | Value |
+|-----------|-------|
+| Dataset | CICIDS2017 Cleaned |
+| Training Samples | 160,000 |
+| Test Samples | 40,000 |
+| Accuracy | 99.98% |
+| Precision | 1.00 |
+| Recall | 1.00 |
+| F1 Score | 1.00 |
+| Algorithm | Random Forest (100 trees) |
+
+---
 ## Tech Stack
 
 - Python 3.12
